@@ -3,7 +3,7 @@
 class BaseService
   attr_reader :errors
 
-  STANDARD_METHODS = %i[call].freeze
+  STANDARD_PUBLIC_METHODS = %i[errors call].freeze
 
   def initialize
     @errors = []
@@ -21,11 +21,11 @@ class BaseService
   end
 
   private_class_method def self.service_response(service)
-    response_attributes = (service.public_methods(false) - STANDARD_METHODS).reduce({}) do |response, attr|
+    response_attributes = (service.public_methods(false) - STANDARD_PUBLIC_METHODS).reduce({}) do |response, attr|
       response.merge({ attr => service.public_send(attr) })
     end
 
-    { success: service.errors.empty?, errors: service.errors }.merge(response_attributes)
+    OpenStruct.new({ success: service.errors.empty?, errors: service.errors }.merge(response_attributes))
   end
 
   private
