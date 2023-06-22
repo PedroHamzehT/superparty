@@ -16,7 +16,8 @@ module Users
     end
 
     def create_user(email)
-      User.create!(email:)
+      random_password = SecureRandom.base64(12)
+      User.create!(email:, password: random_password, password_confirmation: random_password)
     end
   end
 end
