@@ -7,7 +7,7 @@ module Api
       end
 
       def create_auth_token
-        @result = Users::CreateAuthTokenService.call(email: params[:email])
+        @result = Users::CreateAuthTokenService.call(email: params[:user][:email])
         head @result.success ? :created : :bad_request
       end
     end
