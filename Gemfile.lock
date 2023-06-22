@@ -133,6 +133,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jwt (2.7.1)
     kwalify (0.7.2)
     launchy (2.5.2)
       addressable (~> 2.8)
@@ -280,6 +281,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   jbuilder
+  jwt
   letter_opener (~> 1.8, >= 1.8.1)
   pg
   puma (~> 5.0)
