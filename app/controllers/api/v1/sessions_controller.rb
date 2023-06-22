@@ -6,13 +6,9 @@ module Api
       def create
       end
 
-      def create_by_magic_link
-        result = Sessions::CreateByMagicLinkService.call(magic_link_params)
-        if result.success
-          render json
-        else
-          render json: { success: false, errors: result.errors }, status: :bad_request
-        end
+      def magic_link
+        @result = Sessions::CreateByMagicLinkService.call(auth_token: params[:auth_token])
+        return error_response unless @result.success
       end
 
       def destroy

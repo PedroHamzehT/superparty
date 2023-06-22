@@ -6,16 +6,15 @@ module Sessions
 
     def call(auth_token:)
       find_user(auth_token)
-      add_error('User not found') and return if user.blank?
-      add_error('Token already used') and return if user.user.auth_token_confirmed_at?
+      add_error('Invalid token, try to log in again') and return if user.blank? || user.auth_token_confirmed_at?
 
       user.update(auth_token_confirmed_at: Time.zone.now)
-      @jwt_token = Tokens::CreateJWT.call(user:)
+      @jwt_token = Tokens::GenerateJwtService.call(user:).jwt_token
     end
 
     private
 
-    def find_user
+    def find_user(auth_token)
       @user = User.find_by(auth_token:)
     end
   end
