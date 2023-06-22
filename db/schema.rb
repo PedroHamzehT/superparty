@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_003831) do
     t.string "auth_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "confirmed_at"
+    t.datetime "auth_token_confirmed_at", null: false
   end
 
 end
