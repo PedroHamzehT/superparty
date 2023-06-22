@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: %i[create destroy] do
         collection do
-          post :magic_link
+          get :magic_link
         end
       end
       resources :users, only: %i[create] do
