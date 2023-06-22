@@ -3,7 +3,7 @@
 class BaseService
   attr_reader :errors
 
-  STANDARD_METHODS = %i[call]
+  STANDARD_METHODS = %i[call].freeze
 
   def initialize
     @errors = []
@@ -20,9 +20,7 @@ class BaseService
     NotImplementedError
   end
 
-  private
-
-  def self.service_response(service)
+  private_class_method def self.service_response(service)
     response_attributes = (service.public_methods(false) - STANDARD_METHODS).reduce({}) do |response, attr|
       response.merge({ attr => service.public_send(attr) })
     end
@@ -30,7 +28,9 @@ class BaseService
     { success: service.errors.empty?, errors: service.errors }.merge(response_attributes)
   end
 
+  private
+
   def add_error(error)
-    self.errors << error
+    @errors << error
   end
 end
