@@ -4,6 +4,8 @@ module Api
   module V1
     class SessionsController < ApplicationController
       def create
+        @result = Sessions::SignInService.call(sessionres_create_params)
+        return error_response unless @result.success
       end
 
       def magic_link
@@ -16,8 +18,8 @@ module Api
 
       private
 
-      def magic_link_params
-        params.permit(:auth_token)
+      def sessions_create_params
+        params.require(:user).permit(:email, :password)
       end
     end
   end
