@@ -9,7 +9,7 @@ class BaseService
     @errors = []
   end
 
-  def self.call(**arguments)
+  def self.call(arguments = {})
     service = new
     service.call(**arguments)
 
