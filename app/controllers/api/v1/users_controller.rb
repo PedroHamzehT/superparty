@@ -4,11 +4,19 @@ module Api
   module V1
     class UsersController < ApplicationController
       def create
+        @result = Users::SignUpService.call(sign_up_params)
+        return error_response unless @result.success
       end
 
       def create_auth_token
         @result = Users::CreateAuthTokenService.call(email: params[:user][:email])
-        head @result.success ? :created : :bad_request
+        return error_response unless @result.success
+      end
+
+      private
+
+      def sign_up_params
+        params.require(:user).permit(:email, :password, :password_confirmation)
       end
     end
   end
