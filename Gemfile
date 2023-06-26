@@ -62,3 +62,5 @@ group :test do
   gem 'simplecov', require: false
   gem 'webmock'
 end
+
+gem "service_actor-rails", "~> 1.0"

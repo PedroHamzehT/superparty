@@ -240,6 +240,11 @@ GEM
       simplecov (>= 0.17.0)
       tty-which (~> 0.4.0)
       virtus (~> 1.0)
+    service_actor (3.7.0)
+      zeitwerk
+    service_actor-rails (1.0.0)
+      rails (>= 4.2)
+      service_actor
     sexp_processor (4.16.1)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -288,6 +293,7 @@ DEPENDENCIES
   rails (~> 7.0.4, >= 7.0.4.3)
   rspec-rails (~> 6.0.0)
   rubycritic
+  service_actor-rails (~> 1.0)
   simplecov
   tzinfo-data
   webmock
