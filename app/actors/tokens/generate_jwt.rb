@@ -14,7 +14,7 @@ module Tokens
     private
 
     def generate_token
-      self.jwt_token = JWT.encode payload(user), HMAC_SECRET, ALGORITHM
+      self.jwt_token = JWT.encode payload, HMAC_SECRET, ALGORITHM
     end
 
     def payload

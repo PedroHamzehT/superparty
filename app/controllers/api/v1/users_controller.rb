@@ -9,8 +9,8 @@ module Api
       end
 
       def create_auth_token
-        @result = Users::CreateAuthTokenService.call(email: params[:user][:email])
-        return error_response unless @result.success
+        @result = Users::CreateAuthToken.result(email: params[:user][:email])
+        return error_response unless @result.success?
       end
 
       private

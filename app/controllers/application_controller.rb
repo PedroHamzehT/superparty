@@ -2,6 +2,6 @@
 
 class ApplicationController < ActionController::API
   def error_response(result: @result, status: :bad_request)
-    render json: { success: false, errors: result.errors }, status:
+    render json: { success: false, error: result.error }, status:
   end
 end

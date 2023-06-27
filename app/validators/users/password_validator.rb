@@ -3,8 +3,10 @@
 module Users
   class PasswordValidator < ActiveModel::Validator
     def validate(record)
+      return if record.id.nil? || record.password.nil?
+
       # Minimum length requirement
-      unless record.password.length >= 8
+      unless record.password.size >= 8
         record.errors.add(:password, 'must be at least 8 characters long')
         return
       end

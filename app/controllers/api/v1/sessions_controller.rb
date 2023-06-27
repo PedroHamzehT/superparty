@@ -9,8 +9,8 @@ module Api
       end
 
       def magic_link
-        @result = Sessions::CreateByMagicLinkService.call(auth_token: params[:auth_token])
-        return error_response unless @result.success
+        @result = Sessions::CreateByMagicLink.result(auth_token: params[:auth_token])
+        return error_response unless @result.success?
       end
 
       def destroy

@@ -24,7 +24,13 @@ module Users
     end
 
     def generate_auth_token
-      @user.update!(auth_token: SecureRandom.urlsafe_base64, auth_token_confirmed_at: nil)
+      return if @user.update(
+        auth_token: SecureRandom.urlsafe_base64,
+        auth_token_confirmed_at: nil,
+        magic_link_creation: true
+      )
+
+      fail!(error: @user.friendly_error_messages)
     end
 
     def notify_user
