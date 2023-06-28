@@ -16,7 +16,7 @@ module Users
     private
 
     def register_user
-      @user = User.new(email:, password:, password_confirmation:)
+      @user = User.new(first_name:, last_name:, email:, password:, password_confirmation:)
       fail!(error: @user.friendly_error_messages) unless @user.save
     end
 
