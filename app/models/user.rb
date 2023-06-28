@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: users
+#
+#  id                                :bigint           not null, primary key
+#  auth_token                        :string
+#  auth_token_confirmed_at           :datetime
+#  email                             :string           not null
+#  first_name                        :string
+#  last_name                         :string
+#  password_digest                   :string
+#  reset_password_token              :string
+#  reset_password_token_confirmed_at :datetime
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#
 class User < ApplicationRecord
   attr_accessor :magic_link_creation
 
