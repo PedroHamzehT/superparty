@@ -2,11 +2,11 @@
 
 module Users
   class SignUp < Actor
-    input :email, type: String
-    input :password, type: String
-    input :password_confirmation, type: String
-    input :first_name, type: String
-    input :last_name, type: String
+    input :email, type: String, default: nil
+    input :password, type: String, default: nil
+    input :password_confirmation, type: String, default: nil
+    input :first_name, type: String, default: nil
+    input :last_name, type: String, default: nil
 
     output :jwt_token
 
