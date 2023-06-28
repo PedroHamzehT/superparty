@@ -1,20 +1,23 @@
 # frozen_string_literal: true
 
-module Sessions
-  class SignIn < Actor
+module Users
+  class SignUp < Actor
     input :email, type: String
     input :password, type: String
+    input :password_confirmation, type: String
+    input :first_name, type: String
+    input :last_name, type: String
 
     output :jwt_token
 
-    play :find_and_authenticate_user,
+    play :register_user,
          :generate_jwt_token
 
     private
 
-    def find_and_authenticate_user
-      @user = User.find_by(email:)
-      fail!(error: 'Invalid e-mail or password') if @user.blank? || !@user.authenticate(password)
+    def register_user
+      @user = User.new(email:, password:, password_confirmation:)
+      fail!(error: @user.friendly_error_messages) unless @user.save
     end
 
     def generate_jwt_token

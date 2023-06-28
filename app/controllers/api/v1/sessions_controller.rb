@@ -4,8 +4,8 @@ module Api
   module V1
     class SessionsController < ApplicationController
       def create
-        @result = Sessions::SignInService.call(sessionres_create_params)
-        return error_response unless @result.success
+        @result = Sessions::SignIn.result(sessions_create_params)
+        return error_response unless @result.success?
       end
 
       def magic_link
