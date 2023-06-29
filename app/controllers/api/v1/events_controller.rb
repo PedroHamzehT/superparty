@@ -5,6 +5,13 @@ module Api
     class EventsController < ApplicationController
       before_action :authenticate_user!
 
+      def index
+        result = Events::ListEvents.result(user: @current_user)
+        return error_response(result:) if result.failure?
+
+        @events = result.events
+      end
+
       def create
         result = Events::CreateEvent.result(event_params)
         return error_response(result:) if result.failure?
