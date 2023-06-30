@@ -5,8 +5,10 @@
 #  id          :bigint           not null, primary key
 #  date        :date
 #  description :text
+#  event_link  :string
 #  name        :string
 #  time        :time
+#  type        :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  user_id     :bigint           not null
@@ -20,7 +22,11 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Event < ApplicationRecord
-  validates :name, :description, :date, presence: true
+  validates :name, :description, :date, :event_format, presence: true
 
-  belongs_to :organizer, class_name: 'User', foreign_key: 'user_id'
+  enum event_format: %i[online on_site]
+
+  has_one :address
+
+  accepts_nested_attributes_for :address
 end

@@ -19,7 +19,6 @@ module Api
         result = Events::CreateEvent.result(event_params)
         return error_response(result:) if result.failure?
 
-        head :created
         @event = result.event
       end
 
@@ -53,7 +52,10 @@ module Api
       end
 
       def event_params
-        params.require(:event).permit(:name, :description, :date, :time).merge(user: @current_user)
+        params.require(:event).permit(
+          :name, :description, :date, :time, :event_format, :event_link,
+          address_attributes: %i[street number neighborhood zipcode complement state city]
+        ).merge(user: @current_user)
       end
 
       def update_event_params
