@@ -11,7 +11,7 @@ module Events
     private
 
     def fetch_user_events
-      self.events = user.events
+      self.events = user.events + user.participating_events
     end
   end
 end
