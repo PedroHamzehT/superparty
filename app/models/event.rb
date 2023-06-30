@@ -2,16 +2,16 @@
 #
 # Table name: events
 #
-#  id          :bigint           not null, primary key
-#  date        :date
-#  description :text
-#  event_link  :string
-#  name        :string
-#  time        :time
-#  type        :integer          not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  user_id     :bigint           not null
+#  id           :bigint           not null, primary key
+#  date         :date
+#  description  :text
+#  event_format :integer          not null
+#  event_link   :string
+#  name         :string
+#  time         :time
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :bigint           not null
 #
 # Indexes
 #
@@ -25,6 +25,9 @@ class Event < ApplicationRecord
   validates :name, :description, :date, :event_format, presence: true
 
   enum event_format: %i[online on_site]
+
+  has_many :invites, class_name: 'EventGuest', foreign_key: 'event_id'
+  has_many :participants, through: :invites, source: :user
 
   has_one :address
 

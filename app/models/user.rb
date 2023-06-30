@@ -30,4 +30,6 @@ class User < ApplicationRecord
   validates_with Users::PasswordValidator
 
   has_many :events
+  has_many :invitations, class_name: 'EventGuest', foreign_key: 'user_id'
+  has_many :participating_events, through: :invitations, source: :event
 end
