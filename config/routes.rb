@@ -6,6 +6,7 @@ Rails.application.routes.draw do
           get :magic_link
         end
       end
+
       resources :users, only: %i[create] do
         collection do
           post :create_auth_token
@@ -13,6 +14,8 @@ Rails.application.routes.draw do
           post :reset_password
         end
       end
+
+      resources :events
     end
   end
 end

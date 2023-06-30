@@ -28,4 +28,6 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true, unless: -> { @magic_link_creation }
   validates :password, :password_confirmation, presence: true, on: :create
   validates_with Users::PasswordValidator
+
+  has_many :events
 end

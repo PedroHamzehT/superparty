@@ -22,7 +22,8 @@ module Tokens
         id: user.id,
         email: user.email,
         first_name: user.first_name,
-        last_name: user.last_name
+        last_name: user.last_name,
+        exp: Time.now.to_i + 4 * 3600
       }
     end
   end
