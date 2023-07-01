@@ -23,6 +23,7 @@
 #
 class EventGuest < ApplicationRecord
   validates :confirmation_token, uniqueness: true, if: -> { confirmation_token.present? }
+  validates :email, :user_id, uniqueness: true, scope: [:event_id]
 
   belongs_to :user, optional: true
   belongs_to :event
