@@ -64,3 +64,5 @@ group :test do
 end
 
 gem "service_actor-rails", "~> 1.0"
+
+gem "pundit", "~> 2.3"
