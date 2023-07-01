@@ -15,7 +15,15 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :events
+      resources :events do
+        resources :event_guests, only: %i[index create]
+      end
+
+      resources :event_guests, only: %i[destroy] do
+        collection do
+          put :confirm
+        end
+      end
     end
   end
 end
