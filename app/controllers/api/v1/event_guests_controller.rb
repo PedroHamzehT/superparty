@@ -15,8 +15,6 @@ module Api
       end
 
       def create
-        return unless can_modify_invite?('create')
-
         result = EventGuests::CreateInvite.result(invitation_params.merge(user: @current_user))
         return error_response(result:) if result.failure?
 
@@ -34,13 +32,6 @@ module Api
       end
 
       private
-
-      def can_modify_invite?(action)
-        result = EventGuests::CanModifyInvite.result(current_user: @current_user, event: @event, action:)
-        error_response(result:, status: :unauthorized) if result.failure?
-
-        result.success?
-      end
 
       def find_current_user
         result = Tokens::IdentifyUser.result(header_authorization: request.headers['Authorization'])
