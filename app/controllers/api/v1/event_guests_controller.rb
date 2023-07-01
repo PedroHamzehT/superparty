@@ -5,7 +5,7 @@ module Api
     class EventGuestsController < ApplicationController
       before_action :authenticate_user!, except: %i[confirm]
       before_action :find_current_user, only: %i[confirm]
-      before_action :find_invite, only: %i[]
+      before_action :find_invite, only: %i[destroy]
 
       def index
         result = EventGuests::ListInvites.result(event_id: params[:event_id])
@@ -22,7 +22,7 @@ module Api
       end
 
       def destroy
-        result = EventGuests::DeleteInvite.result(id: params[:id], user: @current_user)
+        result = EventGuests::DeleteInvite.result(invite: @invite, user: @current_user)
         return error_response(result:) if result.failure?
       end
 
@@ -32,6 +32,11 @@ module Api
       end
 
       private
+
+      def find_invite
+        @invite = EventGuest.find_by(id: params[:id])
+        return object_not_found_error(:invite) unless @invite
+      end
 
       def find_current_user
         result = Tokens::IdentifyUser.result(header_authorization: request.headers['Authorization'])

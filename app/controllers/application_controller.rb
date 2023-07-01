@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
   end
 
   def object_not_found_error(object)
-    render json: { error: "#{object} not found " }, status: :bad_request
+    render json: { error: "#{object} not found" }, status: :bad_request
   end
 
   def authenticate_user!
