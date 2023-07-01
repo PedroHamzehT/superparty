@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  attr_reader :current_user
+
   def error_response(result: @result, status: :bad_request)
     render json: { error: result.error }, status:
   end
