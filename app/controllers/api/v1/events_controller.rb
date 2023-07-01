@@ -7,7 +7,7 @@ module Api
       before_action :find_event, only: %i[show update destroy]
 
       def index
-        result = Events::ListEvents.result(user: @current_user)
+        result = Events::ListEvents.result(user: current_user)
         return error_response(result:) if result.failure?
 
         @events = result.events
@@ -45,7 +45,7 @@ module Api
       end
 
       def validate_modification_permission(action)
-        result = Events::CanModifyEvent.result(current_user: @current_user, event: @event, action:)
+        result = Events::CanModifyEvent.result(current_user: current_user, event: @event, action:)
         error_response(result:, status: :unauthorized) if result.failure?
 
         result.success?
@@ -55,7 +55,7 @@ module Api
         params.require(:event).permit(
           :name, :description, :date, :time, :event_format, :event_link,
           address_attributes: %i[street number neighborhood zipcode complement state city]
-        ).merge(user: @current_user)
+        ).merge(user: current_user)
       end
 
       def update_event_params
