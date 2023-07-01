@@ -1,0 +1,55 @@
+# frozen_string_literal: true
+
+module Api
+  module V1
+    class EventGuestsController < ApplicationController
+      before_action :authenticate_user!, except: %i[confirm]
+      before_action :find_current_user, only: %i[confirm]
+      before_action :find_invite, only: %i[destroy]
+
+      def index
+        result = EventGuests::ListInvites.result(event_id: params[:event_id])
+        return error_response(result:) if result.failure?
+
+        @invites = result.invites
+      end
+
+      def create
+        result = EventGuests::CreateInvite.result(invitation_params.merge(user: @current_user))
+        return error_response(result:) if result.failure?
+
+        @invite = result.invite
+      end
+
+      def destroy
+        result = EventGuests::DeleteInvite.result(invite: @invite, user: @current_user)
+        return error_response(result:) if result.failure?
+      end
+
+      def confirm
+        result = EventGuests::ConfirmInvite.result(confirm_invite_params.merge(user: @current_user))
+        return error_response(result:) if result.failure?
+      end
+
+      private
+
+      def find_invite
+        @invite = EventGuest.find_by(id: params[:id])
+        return object_not_found_error(:invite) unless @invite
+      end
+
+      def find_current_user
+        result = Tokens::IdentifyUser.result(header_authorization: request.headers['Authorization'])
+        @current_user = result.user if result.success?
+      end
+
+      def invitation_params
+        params.permit(:event_id, :email)
+      end
+
+      def confirm_invite_params
+        params.permit(:id, :confirmation_token)
+      end
+    end
+  end
+end
