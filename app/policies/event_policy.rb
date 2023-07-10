@@ -17,6 +17,10 @@ class EventPolicy < ApplicationPolicy
     can_change_event?(record)
   end
 
+  def send_invite?
+    can_change_event?(record)
+  end
+
   class Scope < Scope
     def resolve
       return scope.all if user.admin?

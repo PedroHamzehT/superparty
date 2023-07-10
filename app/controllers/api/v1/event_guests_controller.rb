@@ -5,29 +5,35 @@ module Api
     class EventGuestsController < ApplicationController
       before_action :authenticate_user!, except: %i[confirm]
       before_action :find_current_user, only: %i[confirm]
+      before_action :find_event, only: %i[index create]
       before_action :find_invite, only: %i[destroy]
 
       def index
-        result = EventGuests::ListInvites.result(event_id: params[:event_id])
-        return error_response(result:) if result.failure?
+        authorize @event
 
-        @invites = result.invites
+        @invites = @event.invites
       end
 
       def create
-        result = EventGuests::CreateInvite.result(invitation_params.merge(user: @current_user))
+        authorize @event, :send_invite?
+
+        result = EventGuests::CreateInvite.result(email: params[:email], event: @event, user: current_user)
         return error_response(result:) if result.failure?
 
         @invite = result.invite
       end
 
       def destroy
-        result = EventGuests::DeleteInvite.result(invite: @invite, user: @current_user)
+        authorize @invite
+
+        result = EventGuests::DeleteInvite.result(invite: @invite, user: current_user)
         return error_response(result:) if result.failure?
+      rescue Pundit::NotAuthorizedError
+        object_not_found_error(:invite)
       end
 
       def confirm
-        result = EventGuests::ConfirmInvite.result(confirm_invite_params.merge(user: @current_user))
+        result = EventGuests::ConfirmInvite.result(confirm_invite_params.merge(user: current_user))
         return error_response(result:) if result.failure?
       end
 
@@ -36,6 +42,11 @@ module Api
       def find_invite
         @invite = EventGuest.find_by(id: params[:id])
         return object_not_found_error(:invite) unless @invite
+      end
+
+      def find_event
+        @event = policy_scope(Event).find_by(id: params[:event_id])
+        return object_not_found_error(:event) unless @event
       end
 
       def find_current_user
