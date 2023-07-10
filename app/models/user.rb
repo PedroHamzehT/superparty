@@ -13,6 +13,7 @@
 #  password_digest                   :string
 #  reset_password_token              :string
 #  reset_password_token_confirmed_at :datetime
+#  role                              :integer          default("standard")
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
 #
@@ -32,4 +33,6 @@ class User < ApplicationRecord
   has_many :events
   has_many :invitations, class_name: 'EventGuest', foreign_key: 'user_id'
   has_many :participating_events, through: :invitations, source: :event
+
+  enum role: %i[standard admin]
 end

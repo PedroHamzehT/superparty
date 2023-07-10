@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  include Pundit::Authorization
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  attr_reader :current_user
+
   def error_response(result: @result, status: :bad_request)
     render json: { error: result.error }, status:
   end
@@ -17,5 +23,11 @@ class ApplicationController < ActionController::API
     end
 
     @current_user = result.user
+  end
+
+  private
+
+  def user_not_authorized
+    render json: { error: 'Action not authorized' }, status: :unauthorized
   end
 end
