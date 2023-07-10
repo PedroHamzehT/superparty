@@ -64,7 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_235458) do
     t.datetime "auth_token_confirmed_at"
     t.string "reset_password_token"
     t.datetime "reset_password_token_confirmed_at"
-    t.integer "role", default: 1
+    t.integer "role", default: 0
   end
 
   add_foreign_key "addresses", "events"

@@ -23,8 +23,7 @@ module Api
       end
 
       def update
-        return unless validate_modification_permission('update')
-
+        authorize @event
         result = Events::UpdateEvent.result(update_event_params)
         return error_response(result:) if result.failure?
 
@@ -32,23 +31,16 @@ module Api
       end
 
       def destroy
-        return unless validate_modification_permission('delete')
-
-        @event.destroy
+        authorize @event
+        result = Events::DeleteEvent.result(event: @event)
+        return error_response(result:) if result.failure?
       end
 
       private
 
       def find_event
-        @event = Event.find_by(id: params[:id])
+        @event = policy_scope(Event).find_by(id: params[:id])
         return object_not_found_error('event') unless @event
-      end
-
-      def validate_modification_permission(action)
-        result = Events::CanModifyEvent.result(current_user: current_user, event: @event, action:)
-        error_response(result:, status: :unauthorized) if result.failure?
-
-        result.success?
       end
 
       def event_params

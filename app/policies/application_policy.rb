@@ -36,6 +36,24 @@ class ApplicationPolicy
     false
   end
 
+  private
+
+  def can_see_event?(event)
+    user.admin? || event_admin?(event) || event_participant?(event)
+  end
+
+  def can_change_event?(event)
+    user.admin? || event_admin?(event)
+  end
+
+  def event_admin?(event)
+    event.user_id == user.id
+  end
+
+  def event_participant?(event)
+    event.participants.find_by(id: user.id).present?
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user
