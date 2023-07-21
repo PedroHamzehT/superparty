@@ -5,6 +5,10 @@ class EventPolicy < ApplicationPolicy
     can_see_event?(record)
   end
 
+  def create?
+    can_change_event?(record)
+  end
+
   def show?
     can_see_event?(record)
   end
