@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
       resources :events do
         resources :event_guests, only: %i[index create]
+
+        resources :contributions, only: %i[index create]
+        match '/:event_id/contributions', to: 'contributions#update', via: %i[put patch]
+        delete '/:event_id/contributions', to: 'contributions#destroy'
       end
 
       resources :event_guests, only: %i[destroy] do
