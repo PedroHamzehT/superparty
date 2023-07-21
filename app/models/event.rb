@@ -30,6 +30,7 @@ class Event < ApplicationRecord
   has_many :participants, through: :invites, source: :user
 
   has_one :address, dependent: :destroy
+  has_one :contribution, dependent: :destroy
 
   accepts_nested_attributes_for :address
 end
