@@ -35,6 +35,13 @@ module Api
         @contribution_item = result.record
       end
 
+      def destroy
+        authorize(@event)
+
+        result = Generic::DestroyRecord.result(record: @contribution_item)
+        return error_response if result.failure?
+      end
+
       private
 
       def find_contribution
