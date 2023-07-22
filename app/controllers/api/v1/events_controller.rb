@@ -38,11 +38,6 @@ module Api
 
       private
 
-      def find_event
-        @event = policy_scope(Event).find_by(id: params[:id])
-        return object_not_found_error('event') unless @event
-      end
-
       def event_params
         params.require(:event).permit(
           :name, :description, :date, :time, :event_format, :event_link,

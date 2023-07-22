@@ -30,4 +30,23 @@ class ApplicationController < ActionController::API
   def user_not_authorized
     render json: { error: 'Action not authorized' }, status: :unauthorized
   end
+
+  def find_event
+    @event = policy_scope(Event).find_by(id: params[:event_id])
+    return object_not_found_error(:event) unless @event
+  end
+
+  def find_contribution
+    find_event unless @event
+
+    @contribution = @event.contribution
+    return object_not_found_error(:contribution) unless @contribution
+  end
+
+  def find_contribution_item
+    find_contribution unless @contribution
+
+    @contribution_item = @contribution.contribution_items.find_by(id: params[:id] || params[:contribution_item_id])
+    return object_not_found_error(:contribution_item) unless @contribution_item
+  end
 end

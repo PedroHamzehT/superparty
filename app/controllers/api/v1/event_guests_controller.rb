@@ -44,11 +44,6 @@ module Api
         return object_not_found_error(:invite) unless @invite
       end
 
-      def find_event
-        @event = policy_scope(Event).find_by(id: params[:event_id])
-        return object_not_found_error(:event) unless @event
-      end
-
       def find_current_user
         result = Tokens::IdentifyUser.result(header_authorization: request.headers['Authorization'])
         @current_user = result.user if result.success?

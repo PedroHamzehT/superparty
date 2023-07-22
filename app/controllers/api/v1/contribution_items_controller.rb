@@ -44,19 +44,6 @@ module Api
 
       private
 
-      def find_contribution
-        @event = policy_scope(Event).find_by(id: params[:event_id])
-        return object_not_found_error(:event) unless @event
-
-        @contribution = @event.contribution
-        return object_not_found_error(:contribution) unless @contribution
-      end
-
-      def find_contribution_item
-        @contribution_item = @contribution.contribution_items.find_by(id: params[:id])
-        return object_not_found_error(:contribution_item) unless @contribution_item
-      end
-
       def contribution_item_params
         params.require(:contribution_item).permit(:name, :description, :max_amount_allowed)
       end

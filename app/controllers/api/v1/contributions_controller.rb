@@ -43,11 +43,6 @@ module Api
 
       private
 
-      def find_event
-        @event = policy_scope(Event).find_by(id: params[:event_id])
-        return object_not_found_error(:event) unless @event
-      end
-
       def contribution_params
         params.require(:contribution).permit(:start_date, :end_date)
       end
