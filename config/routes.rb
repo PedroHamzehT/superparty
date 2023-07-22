@@ -21,6 +21,10 @@ Rails.application.routes.draw do
         resources :contributions, only: %i[index create]
         match 'contributions', to: 'contributions#update', via: %i[put patch]
         delete 'contributions', to: 'contributions#destroy'
+
+        resources :contribution_items, only: %i[index create]
+        match 'contribution_items', to: 'contribution_items#update', via: %i[put patch]
+        delete 'contribution_items', to: 'contribution_items#destroy'
       end
 
       resources :event_guests, only: %i[destroy] do

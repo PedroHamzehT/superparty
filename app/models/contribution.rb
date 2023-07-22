@@ -21,4 +21,6 @@
 #
 class Contribution < ApplicationRecord
   belongs_to :event
+
+  has_many :contribution_items, dependent: :destroy
 end

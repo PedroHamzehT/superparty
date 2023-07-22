@@ -23,5 +23,8 @@ class ContributionItem < ApplicationRecord
   validates :max_amount_allowed, numericality: { only_integer: true, greater_than: 0 }
 
   belongs_to :contribution
-  belongs_to :event, through: :contribution
+
+  def event
+    @event ||= contribution.event
+  end
 end
