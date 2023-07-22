@@ -36,4 +36,8 @@ class User < ApplicationRecord
   has_many :user_contributions, dependent: :destroy
 
   enum role: %i[standard admin]
+
+  def name
+    first_name + last_name
+  end
 end
