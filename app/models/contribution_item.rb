@@ -24,6 +24,8 @@ class ContributionItem < ApplicationRecord
 
   belongs_to :contribution
 
+  has_many :user_contributions, dependent: :destroy
+
   def event
     @event ||= contribution.event
   end
