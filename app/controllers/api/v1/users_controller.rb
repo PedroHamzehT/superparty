@@ -4,6 +4,7 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :find_user_by_email, only: %i[recover_password]
+      before_action :authenticate_user!, only: %i[my_item_contributions]
 
       def create
         @result = Users::SignUp.result(sign_up_params)
@@ -23,6 +24,11 @@ module Api
       def reset_password
         @result = Users::ResetPassword.result(reset_password_params)
         return error_response unless @result.success?
+      end
+
+      def my_item_contributions
+        @user_contributions = current_user.user_contributions.from_contribution(params[:contribution_id])
+        render json: { contribution_item_ids: @user_contributions.pluck(:contribution_item_id) }
       end
 
       private
