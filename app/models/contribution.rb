@@ -4,12 +4,15 @@
 #
 # Table name: contributions
 #
-#  id         :bigint           not null, primary key
-#  end_date   :date
-#  start_date :date
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  event_id   :bigint           not null
+#  id                      :bigint           not null, primary key
+#  auto_create_suggestions :boolean          default(FALSE), not null
+#  end_date                :date
+#  show_who_contributed    :boolean          default(FALSE), not null
+#  start_date              :date
+#  suggestions_allowed     :boolean          default(FALSE), not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  event_id                :bigint           not null
 #
 # Indexes
 #
@@ -20,6 +23,9 @@
 #  fk_rails_...  (event_id => events.id)
 #
 class Contribution < ApplicationRecord
+  validates :suggestions_allowed, :auto_create_suggestions, :show_who_contributed,
+            presence: true, inclusion: { in: [true, false] }
+
   belongs_to :event
 
   has_many :contribution_items, dependent: :destroy
