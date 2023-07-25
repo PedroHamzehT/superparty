@@ -40,4 +40,8 @@ class User < ApplicationRecord
   def name
     first_name + last_name
   end
+
+  def participant_of?(event)
+    participating_events.where(id: event.id).present?
+  end
 end
