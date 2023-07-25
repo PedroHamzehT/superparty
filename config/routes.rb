@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           post :create_auth_token
           post :recover_password
           post :reset_password
+          get  'my_item_contributions/:contribution_id', to: 'users#my_item_contributions'
         end
       end
 
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
         delete 'contributions', to: 'contributions#destroy'
 
         resources :contribution_items, only: %i[index create update destroy] do
-          resources :user_contributions, only: %i[index create update destroy]
+          resources :user_contributions, only: %i[create destroy]
         end
       end
 
