@@ -21,4 +21,14 @@
 class UserContribution < ApplicationRecord
   belongs_to :user
   belongs_to :contribution_item
+
+  scope(
+    :from_contribution, lambda do |contribution_id|
+      joins(:contribution_item).where(contribution_items: { contribution_id: })
+    end
+  )
+
+  def event
+    contribution_item.contribution.event
+  end
 end
