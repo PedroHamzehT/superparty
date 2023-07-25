@@ -8,7 +8,7 @@ module Api
       before_action :find_contribution_item, only: %i[update destroy]
 
       def index
-        @contribution_items = @contribution.contribution_items
+        @contribution_items = @contribution.contribution_items.includes(user_contributions: :user)
       end
 
       def create
