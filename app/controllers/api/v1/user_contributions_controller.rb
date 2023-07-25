@@ -5,10 +5,26 @@ module Api
     class UserContributionsController < ApplicationController
       before_action :authenticate_user!
       before_action :find_contribution_item
-      before_action :find_user_contribution, only: %i[update destroy]
+      before_action :find_user_contribution, only: %i[destroy]
 
-      def index
-        @user_contributions = @contribution_item.user_contributions.includes(:user)
+      def create
+        potential_new_contribution = UserContribution.new(contribution_item: @contribution_item)
+        authorize(potential_new_contribution)
+
+        @result = UserContributions::CreateContribution.result(
+          user: current_user,
+          contribution_item: @contribution_item
+        )
+        return error_response if @result.failure?
+
+        @user_contribution = @result.user_contribution
+      end
+
+      def destroy
+        authorize(@user_contribution)
+
+        @result = Generic::DestroyRecord.result(record: @user_contribution)
+        return error_response if @result.failure?
       end
 
       private
