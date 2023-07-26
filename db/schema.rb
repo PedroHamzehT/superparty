@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_132505) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_001631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +36,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_132505) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contribution_id"], name: "index_contribution_items_on_contribution_id"
+  end
+
+  create_table "contribution_suggestions", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.bigint "contribution_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contribution_id"], name: "index_contribution_suggestions_on_contribution_id"
   end
 
   create_table "contributions", force: :cascade do |t|
@@ -100,6 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_132505) do
 
   add_foreign_key "addresses", "events"
   add_foreign_key "contribution_items", "contributions"
+  add_foreign_key "contribution_suggestions", "contributions"
   add_foreign_key "contributions", "events"
   add_foreign_key "event_guests", "events"
   add_foreign_key "event_guests", "users"
