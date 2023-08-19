@@ -42,9 +42,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_001631) do
     t.string "name", null: false
     t.text "description"
     t.bigint "contribution_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contribution_id"], name: "index_contribution_suggestions_on_contribution_id"
+    t.index ["user_id"], name: "index_contribution_suggestions_on_user_id"
   end
 
   create_table "contributions", force: :cascade do |t|
@@ -110,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_001631) do
   add_foreign_key "addresses", "events"
   add_foreign_key "contribution_items", "contributions"
   add_foreign_key "contribution_suggestions", "contributions"
+  add_foreign_key "contribution_suggestions", "users"
   add_foreign_key "contributions", "events"
   add_foreign_key "event_guests", "events"
   add_foreign_key "event_guests", "users"
