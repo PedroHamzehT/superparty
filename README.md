@@ -1,24 +1,11 @@
-# README
+# Running application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application is using docker, so you start it by either, setting up the project manually through bundle or just using docker.
 
-Things you may want to cover:
+If you don't how docker works, the project has a makefile to help you with some common commands:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `make start` -> This will start the project and its dependencies (PostgreSQL and Mailcatcher)
+- `make stop` -> This will stop the project and its dependencies (PostgreSQL and Mailcatcher)
+- `make console` -> This will open a rails console for you
+- `make migrate` -> This will run the rails rake task to execute the pending migrations
+- `make logs` -> This will show up the logs of all services running (Rails, PostgreSQL and Mailcatcher)
