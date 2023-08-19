@@ -14,32 +14,32 @@ module Api
       def create
         authorize(@event)
 
-        result = Generic::CreateRecord.result(
+        @result = Generic::CreateRecord.result(
           klass: ContributionItem,
           params: contribution_item_params.merge(contribution_id: @contribution.id)
         )
-        return error_response if result.failure?
+        return error_response if @result.failure?
 
-        @contribution_item = result.record
+        @contribution_item = @result.record
       end
 
       def update
         authorize(@event)
 
-        result = Generic::UpdateRecord.result(
+        @result = Generic::UpdateRecord.result(
           record: @contribution_item,
           params: contribution_item_params.merge(contribution_id: @contribution.id)
         )
-        return error_response if result.failure?
+        return error_response if @result.failure?
 
-        @contribution_item = result.record
+        @contribution_item = @result.record
       end
 
       def destroy
         authorize(@event)
 
-        result = Generic::DestroyRecord.result(record: @contribution_item)
-        return error_response if result.failure?
+        @result = Generic::DestroyRecord.result(record: @contribution_item)
+        return error_response if @result.failure?
       end
 
       private
