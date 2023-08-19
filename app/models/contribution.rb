@@ -23,8 +23,7 @@
 #  fk_rails_...  (event_id => events.id)
 #
 class Contribution < ApplicationRecord
-  validates :suggestions_allowed, :auto_create_suggestions, :show_who_contributed,
-            presence: true, inclusion: { in: [true, false] }
+  validates :suggestions_allowed, :auto_create_suggestions, :show_who_contributed, inclusion: { in: [true, false] }
 
   belongs_to :event
 
