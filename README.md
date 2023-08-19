@@ -9,3 +9,4 @@ If you don't how docker works, the project has a makefile to help you with some 
 - `make console` -> This will open a rails console for you
 - `make migrate` -> This will run the rails rake task to execute the pending migrations
 - `make logs` -> This will show up the logs of all services running (Rails, PostgreSQL and Mailcatcher)
+- `make debug` -> This will open the rails logs and give you access to the breakpoints, if you want to quit without closing the server type: `control+P control+q`

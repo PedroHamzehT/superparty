@@ -12,3 +12,6 @@ logs:
 
 migrate:
 	docker compose exec api rails db:migrate || docker compose run api rails db:migrate
+
+debug:
+	docker attach superparty-api-1
