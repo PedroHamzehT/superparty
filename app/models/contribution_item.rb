@@ -19,6 +19,7 @@
 #  fk_rails_...  (contribution_id => contributions.id)
 #
 class ContributionItem < ApplicationRecord
+  validates :name, uniqueness: { scope: :contribution_id }
   validates :name, :max_amount_allowed, presence: true
   validates :max_amount_allowed, numericality: { only_integer: true, greater_than: 0 }
 
