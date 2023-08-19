@@ -32,7 +32,7 @@ class ApplicationController < ActionController::API
   end
 
   def find_event
-    @event = policy_scope(Event).find_by(id: params[:event_id])
+    @event = policy_scope(Event).find_by(id: params[:event_id] || params[:id])
     return object_not_found_error(:event) unless @event
   end
 
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::API
   def find_contribution_item
     find_contribution unless @contribution
 
-    @contribution_item = @contribution.contribution_items.find_by(id: params[:id] || params[:contribution_item_id])
+    @contribution_item = @contribution.contribution_items.find_by(id: params[:contribution_item_id] || params[:id])
     return object_not_found_error(:contribution_item) unless @contribution_item
   end
 end
