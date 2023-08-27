@@ -35,7 +35,7 @@ module Api
 
       def find_user_by_email
         @user = User.find_by(email: params[:email])
-        render object_not_found_error('user') unless @user
+        raise ObjectNotFoundError, 'user' unless @user
       end
 
       def sign_up_params

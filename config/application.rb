@@ -20,6 +20,7 @@ module Superparty
     config.eager_load_paths << Rails.root.join('services')
     config.eager_load_paths << Rails.root.join('actors')
     config.eager_load_paths << Rails.root.join('validators')
+    config.eager_load_paths << Rails.root.join('errors')
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
