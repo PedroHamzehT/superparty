@@ -44,7 +44,9 @@ module Api
       private
 
       def contribution_params
-        params.require(:contribution).permit(:start_date, :end_date)
+        params.require(:contribution).permit(
+          :start_date, :end_date, :auto_create_suggestions, :show_who_contributed, :suggestions_allowed
+        )
       end
     end
   end
