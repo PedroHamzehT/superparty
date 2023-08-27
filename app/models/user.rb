@@ -38,7 +38,7 @@ class User < ApplicationRecord
   enum role: %i[standard admin]
 
   def name
-    first_name + last_name
+    [first_name, last_name].join(' ').strip
   end
 
   def participant_of?(event)

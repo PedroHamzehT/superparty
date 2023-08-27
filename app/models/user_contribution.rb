@@ -22,6 +22,8 @@ class UserContribution < ApplicationRecord
   belongs_to :user
   belongs_to :contribution_item
 
+  delegate :name, :email, to: :user, prefix: true
+
   scope(
     :from_contribution, lambda do |contribution_id|
       joins(:contribution_item).where(contribution_items: { contribution_id: })

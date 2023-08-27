@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.partial! @contribution_items, as: :contribution_item
+json.contribution_items @contribution_items, partial: 'api/v1/contribution_items/contribution_item', as: :contribution_item

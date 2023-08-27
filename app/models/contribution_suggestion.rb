@@ -21,7 +21,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class ContributionSuggestion < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: :contribution_id }
 
   belongs_to :user
   belongs_to :contribution
