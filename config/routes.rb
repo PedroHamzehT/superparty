@@ -26,6 +26,8 @@ Rails.application.routes.draw do
         resources :contribution_items, only: %i[index create update destroy] do
           resources :user_contributions, only: %i[create destroy]
         end
+
+        resources :contribution_suggestions, only: %i[index create destroy]
       end
 
       resources :event_guests, only: %i[destroy] do
