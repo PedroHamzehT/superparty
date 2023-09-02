@@ -26,10 +26,12 @@ class Event < ApplicationRecord
 
   enum event_format: %i[online on_site]
 
+  has_one :address, dependent: :destroy
+  has_one :contribution, dependent: :destroy
+
   has_many :invites, class_name: 'EventGuest', foreign_key: 'event_id'
   has_many :participants, through: :invites, source: :user
-
-  has_one :address, dependent: :destroy
+  has_many :contribution_items, through: :contribution
 
   accepts_nested_attributes_for :address
 end

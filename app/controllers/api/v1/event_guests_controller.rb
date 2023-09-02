@@ -28,8 +28,6 @@ module Api
 
         result = EventGuests::DeleteInvite.result(invite: @invite, user: current_user)
         return error_response(result:) if result.failure?
-      rescue Pundit::NotAuthorizedError
-        object_not_found_error(:invite)
       end
 
       def confirm
@@ -41,12 +39,7 @@ module Api
 
       def find_invite
         @invite = EventGuest.find_by(id: params[:id])
-        return object_not_found_error(:invite) unless @invite
-      end
-
-      def find_event
-        @event = policy_scope(Event).find_by(id: params[:event_id])
-        return object_not_found_error(:event) unless @event
+        raise ObjectNotFoundError, 'invite' unless @invite
       end
 
       def find_current_user

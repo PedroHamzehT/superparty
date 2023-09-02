@@ -8,6 +8,7 @@ module EventGuests
     output :invite
 
     play :create_invite,
+         :identify_user,
          :notify_guest
 
     private
@@ -17,6 +18,13 @@ module EventGuests
       fail!(error: @invite.friendly_error_messages) unless @invite.save
 
       self.invite = @invite
+    end
+
+    def identify_user
+      user = User.find_by(email:)
+      return unless user
+
+      @invite.update(user:)
     end
 
     def notify_guest

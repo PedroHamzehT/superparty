@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_01_235458) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_001631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,39 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_235458) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_addresses_on_event_id"
+  end
+
+  create_table "contribution_items", force: :cascade do |t|
+    t.bigint "contribution_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.integer "max_amount_allowed", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contribution_id"], name: "index_contribution_items_on_contribution_id"
+  end
+
+  create_table "contribution_suggestions", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.bigint "contribution_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contribution_id"], name: "index_contribution_suggestions_on_contribution_id"
+    t.index ["user_id"], name: "index_contribution_suggestions_on_user_id"
+  end
+
+  create_table "contributions", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "suggestions_allowed", default: false, null: false
+    t.boolean "auto_create_suggestions", default: false, null: false
+    t.boolean "show_who_contributed", default: false, null: false
+    t.index ["event_id"], name: "index_contributions_on_event_id"
   end
 
   create_table "event_guests", force: :cascade do |t|
@@ -53,6 +86,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_235458) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "user_contributions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "contribution_item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contribution_item_id"], name: "index_user_contributions_on_contribution_item_id"
+    t.index ["user_id"], name: "index_user_contributions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "first_name"
@@ -68,7 +110,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_235458) do
   end
 
   add_foreign_key "addresses", "events"
+  add_foreign_key "contribution_items", "contributions"
+  add_foreign_key "contribution_suggestions", "contributions"
+  add_foreign_key "contribution_suggestions", "users"
+  add_foreign_key "contributions", "events"
   add_foreign_key "event_guests", "events"
   add_foreign_key "event_guests", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "user_contributions", "contribution_items"
+  add_foreign_key "user_contributions", "users"
 end

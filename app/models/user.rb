@@ -33,6 +33,15 @@ class User < ApplicationRecord
   has_many :events
   has_many :invitations, class_name: 'EventGuest', foreign_key: 'user_id'
   has_many :participating_events, through: :invitations, source: :event
+  has_many :user_contributions, dependent: :destroy
 
   enum role: %i[standard admin]
+
+  def name
+    [first_name, last_name].join(' ').strip
+  end
+
+  def participant_of?(event)
+    participating_events.where(id: event.id).present?
+  end
 end
