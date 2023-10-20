@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Users
-  class CreateAuthToken < Actor
+module Sessions
+  class CreateOneTimePassword < Actor
     input :email, type: String
 
     play :find_or_create_user,
-         :generate_auth_token,
+         :generate_one_time_password,
          :notify_user
 
     private
@@ -19,22 +19,23 @@ module Users
         email:,
         password: random_password,
         password_confirmation: random_password,
-        magic_link_creation: true
+        passwordless_creation: true
       )
     end
 
-    def generate_auth_token
+    def generate_one_time_password
       return if @user.update(
-        auth_token: SecureRandom.urlsafe_base64,
-        auth_token_confirmed_at: nil,
-        magic_link_creation: true
+        one_time_password: Random.rand(10_000..99_999),
+        one_time_password_confirmed_at: nil,
+        one_time_password_created_at: Time.current,
+        passwordless_creation: true
       )
 
       fail!(error: @user.friendly_error_messages)
     end
 
     def notify_user
-      UserMailer.with(user: @user).magic_link_email.deliver_now
+      UserMailer.with(user: @user).one_time_password_email.deliver_now
     end
   end
 end

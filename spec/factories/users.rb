@@ -3,11 +3,12 @@
 # Table name: users
 #
 #  id                                :bigint           not null, primary key
-#  auth_token                        :string
-#  auth_token_confirmed_at           :datetime
 #  email                             :string           not null
 #  first_name                        :string
 #  last_name                         :string
+#  one_time_password                 :integer
+#  one_time_password_confirmed_at    :datetime
+#  one_time_password_created_at      :datetime
 #  password_digest                   :string
 #  reset_password_token              :string
 #  reset_password_token_confirmed_at :datetime
@@ -22,6 +23,5 @@ FactoryBot.define do
     last_name { "MyString" }
     password_digest { "MyString" }
     token { "MyString" }
-    auth_token { "MyString" }
   end
 end

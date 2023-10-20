@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
-  def magic_link_email
+  def one_time_password_email
     user = params[:user]
-    @magic_link = "http://localhost:3000/api/v1/sessions/magic_link?auth_token=#{user.auth_token}"
-    mail(to: user.email, subject: 'Log in Superparty with your magic link')
+    @one_time_password = user.one_time_password
+    mail(to: user.email, subject: 'Here is your code to login SuperParty!')
   end
 
   def reset_password_email

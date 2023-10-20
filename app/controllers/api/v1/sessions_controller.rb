@@ -8,13 +8,20 @@ module Api
         return error_response unless @result.success?
       end
 
-      def magic_link
-        @result = Sessions::CreateByMagicLink.result(auth_token: params[:auth_token])
+      def create_otp
+        @result = Sessions::CreateOneTimePassword.result(email: params[:email])
         return error_response unless @result.success?
       end
 
-      def destroy
+      def confirm_otp
+        @result = Sessions::ConfirmOneTimePassword.result(
+          email: params[:email],
+          one_time_password: params[:one_time_password]
+        )
+        return error_response unless @result.success?
       end
+
+      def destroy; end
 
       private
 
