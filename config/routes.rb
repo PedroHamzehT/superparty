@@ -11,7 +11,6 @@ Rails.application.routes.draw do
 
       resources :users, only: %i[create] do
         collection do
-          post :create_auth_token
           post :recover_password
           post :reset_password
           get  'my_item_contributions/:contribution_id', to: 'users#my_item_contributions'

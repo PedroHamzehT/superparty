@@ -11,11 +11,6 @@ module Api
         return error_response unless @result.success?
       end
 
-      def create_auth_token
-        @result = Users::CreateAuthToken.result(email: params[:user][:email])
-        return error_response unless @result.success?
-      end
-
       def recover_password
         @result = Users::RecoverPassword.result(user: @user)
         return error_response unless @result.success?
