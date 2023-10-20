@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_001631) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_20_122353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,13 +100,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_001631) do
     t.string "first_name"
     t.string "last_name"
     t.string "password_digest"
-    t.string "auth_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "auth_token_confirmed_at"
     t.string "reset_password_token"
     t.datetime "reset_password_token_confirmed_at"
     t.integer "role", default: 0
+    t.string "one_time_password"
+    t.datetime "one_time_password_confirmed_at"
+    t.datetime "one_time_password_created_at"
   end
 
   add_foreign_key "addresses", "events"

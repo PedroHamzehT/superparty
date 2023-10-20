@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :sessions, only: %i[create destroy] do
         collection do
           get :magic_link
+          post :create_otp
         end
       end
 
