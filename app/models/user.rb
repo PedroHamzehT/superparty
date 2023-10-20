@@ -8,7 +8,7 @@
 #  email                             :string           not null
 #  first_name                        :string
 #  last_name                         :string
-#  one_time_password                 :string
+#  one_time_password                 :integer
 #  one_time_password_confirmed_at    :datetime
 #  one_time_password_created_at      :datetime
 #  password_digest                   :string

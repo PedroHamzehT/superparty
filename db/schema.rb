@@ -105,7 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_122353) do
     t.string "reset_password_token"
     t.datetime "reset_password_token_confirmed_at"
     t.integer "role", default: 0
-    t.string "one_time_password"
+    t.integer "one_time_password"
     t.datetime "one_time_password_confirmed_at"
     t.datetime "one_time_password_created_at"
   end

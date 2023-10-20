@@ -13,6 +13,14 @@ module Api
         return error_response unless @result.success?
       end
 
+      def confirm_otp
+        @result = Sessions::ConfirmOneTimePassword.result(
+          email: params[:email],
+          one_time_password: params[:one_time_password]
+        )
+        return error_response unless @result.success?
+      end
+
       def destroy; end
 
       private

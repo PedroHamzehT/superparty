@@ -27,6 +27,7 @@ module Sessions
       return if @user.update(
         one_time_password: Random.rand(10_000..99_999),
         one_time_password_confirmed_at: nil,
+        one_time_password_created_at: Time.current,
         passwordless_creation: true
       )
 
