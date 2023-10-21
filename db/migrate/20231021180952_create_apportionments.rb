@@ -4,9 +4,9 @@ class CreateApportionments < ActiveRecord::Migration[7.0]
       t.date :start_date
       t.date :end_date
       t.integer :goal
-      t.boolean :show_goal_progress
-      t.boolean :dynamic_goal
-      t.boolean :show_who_contributed
+      t.boolean :show_goal_progress, null: false, default: false
+      t.boolean :dynamic_goal, null: false, default: false
+      t.boolean :show_who_contributed, null: false, default: false
       t.integer :value_per_participant
       t.references :event, null: false, foreign_key: true
 
