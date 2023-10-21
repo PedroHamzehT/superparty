@@ -1,6 +1,7 @@
 class ReplaceAuthTokenByOneTimePassword < ActiveRecord::Migration[7.0]
   def change
     remove_column :users, :auth_token, :string
+    remove_column :users, :auth_token_confirmed_at, :datetime
 
     change_table :users do |t|
       t.integer :one_time_password
