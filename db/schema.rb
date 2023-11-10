@@ -31,11 +31,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_180952) do
   create_table "apportionments", force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
-    t.integer "goal"
-    t.boolean "show_goal_progress"
-    t.boolean "dynamic_goal"
-    t.boolean "show_who_contributed"
-    t.integer "value_per_participant"
+    t.integer "goal_in_cents"
+    t.boolean "show_goal_progress", default: false, null: false
+    t.boolean "dynamic_goal", default: false, null: false
+    t.boolean "show_who_contributed", default: false, null: false
+    t.integer "value_per_participant_in_cents"
     t.bigint "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
