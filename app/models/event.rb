@@ -32,6 +32,7 @@ class Event < ApplicationRecord
   has_many :invites, class_name: 'EventGuest', foreign_key: 'event_id'
   has_many :participants, through: :invites, source: :user
   has_many :contribution_items, through: :contribution
+  has_many :apportionments, dependent: :destroy
 
   accepts_nested_attributes_for :address
 end
