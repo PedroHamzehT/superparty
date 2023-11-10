@@ -24,10 +24,21 @@
 #
 class Apportionment < ApplicationRecord
   validates :start_date, presence: true
-  validates :dynamic_goal, :show_goal_progress, :show_who_contributed, presence: true, inclusion: { in: [true, false] }
-  validates :value_per_participant_in_cents, :goal_in_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :value_per_participant_in_cents, presence: true, if: :dynamic_goal
-  validates :goal_in_cents, presence: true, unless: :dynamic_goal
+  validates :dynamic_goal, :show_goal_progress, :show_who_contributed, inclusion: { in: [true, false] }
+  validates :value_per_participant_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, if: :dynamic_goal
+  validates :goal_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, unless: :dynamic_goal
 
   belongs_to :event
+
+  def goal
+    return if goal_in_cents.blank?
+
+    goal_in_cents * 100
+  end
+
+  def value_per_participant
+    return if value_per_participant_in_cents.blank?
+
+    value_per_participant_in_cents * 100
+  end
 end
