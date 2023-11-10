@@ -27,7 +27,7 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'is invalid' }
   validates :reset_password_token, uniqueness: true, if: -> { reset_password_token.present? }
   validates :first_name, :last_name, presence: true, unless: -> { passwordless_creation }
-  validates :password, :password_confirmation, presence: true, on: :create
+  validates :password_confirmation, presence: true, if: -> { password.present? }
   validates_with Users::PasswordValidator
 
   has_many :events
