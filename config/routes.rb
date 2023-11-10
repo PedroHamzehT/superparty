@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: %i[create destroy] do
         collection do
-          get :magic_link
           post :create_otp
           post :confirm_otp
         end
@@ -29,6 +28,8 @@ Rails.application.routes.draw do
         end
 
         resources :contribution_suggestions, only: %i[index create destroy]
+
+        resources :apportionments, only: %i[index create update destroy]
       end
 
       resources :event_guests, only: %i[destroy] do
