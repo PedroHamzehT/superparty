@@ -2,17 +2,17 @@
 #
 # Table name: apportionments
 #
-#  id                    :bigint           not null, primary key
-#  dynamic_goal          :boolean
-#  end_date              :date
-#  goal                  :integer
-#  show_goal_progress    :boolean
-#  show_who_contributed  :boolean
-#  start_date            :date
-#  value_per_participant :integer
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  event_id              :bigint           not null
+#  id                             :bigint           not null, primary key
+#  dynamic_goal                   :boolean          default(FALSE), not null
+#  end_date                       :date
+#  goal_in_cents                  :integer
+#  show_goal_progress             :boolean          default(FALSE), not null
+#  show_who_contributed           :boolean          default(FALSE), not null
+#  start_date                     :date
+#  value_per_participant_in_cents :integer
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  event_id                       :bigint           not null
 #
 # Indexes
 #
@@ -25,9 +25,9 @@
 class Apportionment < ApplicationRecord
   validates :start_date, presence: true
   validates :dynamic_goal, :show_goal_progress, :show_who_contributed, presence: true, inclusion: { in: [true, false] }
-  validates :value_per_participant, :goal, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :value_per_participant, presence: true, if: :dynamic_goal
-  validates :goal, presence: true, unless: :dynamic_goal
+  validates :value_per_participant_in_cents, :goal_in_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :value_per_participant_in_cents, presence: true, if: :dynamic_goal
+  validates :goal_in_cents, presence: true, unless: :dynamic_goal
 
   belongs_to :event
 end
