@@ -28,4 +28,8 @@ class EventGuest < ApplicationRecord
 
   belongs_to :user, optional: true
   belongs_to :event
+
+  has_many :apportionment_contributions, dependent: :destroy
+
+  delegate :name, to: :user, prefix: true, allow_nil: true
 end
