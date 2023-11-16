@@ -3,6 +3,8 @@
 module Api
   module V1
     class EventsController < ApplicationController
+      include FindObjects
+
       before_action :authenticate_user!
       before_action :find_event, only: %i[show update destroy]
 

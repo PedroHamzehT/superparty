@@ -3,6 +3,8 @@
 module Api
   module V1
     class ApportionmentsController < ApplicationController
+      include FindObjects
+
       before_action :authenticate_user!
       before_action :find_event
       before_action :find_apportionment, only: %i[update destroy]
@@ -42,11 +44,6 @@ module Api
       end
 
       private
-
-      def find_apportionment
-        @apportionment = @event.apportionments.find_by(id: params[:id])
-        raise ObjectNotFoundError, :apportionment unless @apportionment
-      end
 
       def apportionment_params
         params.require(:apportionment).permit(

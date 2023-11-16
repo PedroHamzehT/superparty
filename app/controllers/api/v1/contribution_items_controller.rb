@@ -3,6 +3,8 @@
 module Api
   module V1
     class ContributionItemsController < ApplicationController
+      include FindObjects
+
       before_action :authenticate_user!
       before_action :find_contribution
       before_action :find_contribution_item, only: %i[update destroy]

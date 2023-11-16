@@ -3,6 +3,8 @@
 module Api
   module V1
     class EventGuestsController < ApplicationController
+      include FindObjects
+
       before_action :authenticate_user!, except: %i[confirm]
       before_action :find_current_user, only: %i[confirm]
       before_action :find_event, only: %i[index create]
