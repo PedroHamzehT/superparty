@@ -31,23 +31,4 @@ class ApplicationController < ActionController::API
   def object_not_found_error(error)
     render json: { error: "#{error.object} not found" }, status: :bad_request
   end
-
-  def find_event
-    @event = policy_scope(Event).find_by(id: params[:event_id] || params[:id])
-    raise ObjectNotFoundError, 'event' unless @event
-  end
-
-  def find_contribution
-    find_event unless @event
-
-    @contribution = @event.contribution
-    raise ObjectNotFoundError, 'contribution' unless @contribution
-  end
-
-  def find_contribution_item
-    find_contribution unless @contribution
-
-    @contribution_item = @contribution.contribution_items.find_by(id: params[:contribution_item_id] || params[:id])
-    raise ObjectNotFoundError, 'contribution_item' unless @contribution_item
-  end
 end

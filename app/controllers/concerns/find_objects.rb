@@ -21,6 +21,8 @@ module FindObjects
   end
 
   def find_apportionment
+    find_event unless @event
+
     @apportionment = @event.apportionments.find_by(id: params[:apportionment_id] || params[:id])
     raise ObjectNotFoundError, :apportionment unless @apportionment
   end
