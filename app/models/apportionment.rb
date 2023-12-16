@@ -28,6 +28,8 @@ class Apportionment < ApplicationRecord
   validates :value_per_participant_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, if: :dynamic_goal
   validates :goal_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, unless: :dynamic_goal
 
+  has_many :apportionment_contributions, dependent: :destroy
+
   belongs_to :event
 
   def goal

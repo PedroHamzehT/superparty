@@ -29,7 +29,9 @@ Rails.application.routes.draw do
 
         resources :contribution_suggestions, only: %i[index create destroy]
 
-        resources :apportionments, only: %i[index create update destroy]
+        resources :apportionments, only: %i[index create update destroy] do
+          resources :apportionment_contributions, only: %i[create destroy]
+        end
       end
 
       resources :event_guests, only: %i[destroy] do
