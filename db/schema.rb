@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_20_122353) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_11_161357) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_122353) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_addresses_on_event_id"
+  end
+
+  create_table "apportionment_contributions", force: :cascade do |t|
+    t.bigint "apportionment_id", null: false
+    t.bigint "event_guest_id", null: false
+    t.integer "amount_in_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["apportionment_id"], name: "index_apportionment_contributions_on_apportionment_id"
+    t.index ["event_guest_id"], name: "index_apportionment_contributions_on_event_guest_id"
+  end
+
+  create_table "apportionments", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "goal_in_cents"
+    t.boolean "show_goal_progress", default: false, null: false
+    t.boolean "dynamic_goal", default: false, null: false
+    t.boolean "show_who_contributed", default: false, null: false
+    t.integer "value_per_participant_in_cents"
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_apportionments_on_event_id"
   end
 
   create_table "contribution_items", force: :cascade do |t|
@@ -111,6 +135,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_122353) do
   end
 
   add_foreign_key "addresses", "events"
+  add_foreign_key "apportionment_contributions", "apportionments"
+  add_foreign_key "apportionment_contributions", "event_guests"
+  add_foreign_key "apportionments", "events"
   add_foreign_key "contribution_items", "contributions"
   add_foreign_key "contribution_suggestions", "contributions"
   add_foreign_key "contribution_suggestions", "users"

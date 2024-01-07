@@ -8,6 +8,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - db_data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
 
   api:
     build:
@@ -25,6 +27,19 @@ services:
       - DATABASE_PASSWORD=postgres
     volumes:
       - ./:/app
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    ports:
+      - 3001:5173
+    volumes:
+      - ./client:/client
+    depends_on:
+      - api
 
   mailcatcher:
     image: schickling/mailcatcher

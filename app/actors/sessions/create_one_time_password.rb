@@ -14,7 +14,7 @@ module Sessions
       @user = User.find_by(email:)
       return if @user.present?
 
-      random_password = SecureRandom.base64(12)
+      random_password = "@#{SecureRandom.base64(12)}"
       @user = User.create!(
         email:,
         password: random_password,
