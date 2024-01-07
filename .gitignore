@@ -30,6 +30,7 @@
 coverage
 
 .env
+public/
 
 ### Client
 
@@ -57,3 +58,5 @@ client/*.ntvs*
 client/*.njsproj
 client/*.sln
 client/*.sw?
+
+client/public/
