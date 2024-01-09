@@ -1,13 +1,14 @@
-import { useState } from 'react'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import useHomeContext from './useHomeContext'
 
 const HomeForm = () => {
-  const [signType, setSignType] = useState<'login' | 'register'>('login')
+  const { formState: { sign_type } } = useHomeContext()
 
   return (
     <>
-      {signType === 'login' ? <SignIn setSignType={setSignType} /> : <SignUp setSignType={setSignType} />}
+      {sign_type === 'login' && <SignIn />}
+      {sign_type === 'register' && <SignUp />}
     </>
   )
 }
