@@ -5,7 +5,7 @@ interface FormStateType {
   email?: string,
   password?: string,
   confirm_password?: string,
-  sign_type: 'login' | 'register'
+  sign_type: 'login' | 'register' | 'passwordless'
 }
 
 const enum FormActionTypes {
@@ -28,6 +28,10 @@ interface HomeContextType {
 
 const initialState: HomeContextType = {
   formState: {
+    name: '',
+    email: '',
+    password: '',
+    confirm_password: '',
     sign_type: 'login'
   },
   formDispatch: () => {}
@@ -42,7 +46,7 @@ interface HomeContextProviderProps {
 const formReducer = (state: FormStateType, action: FormActionType): FormStateType => {
   switch(action.type) {
     case FormActionTypes.CHANGE_SIGN_TYPE:
-      if (action.payload === 'login' || action.payload === 'register') {
+      if (action.payload === 'login' || action.payload === 'register' || action.payload === 'passwordless') {
         return {...state, sign_type: action.payload}
       } else {
         throw Error('Unknown sign type')
